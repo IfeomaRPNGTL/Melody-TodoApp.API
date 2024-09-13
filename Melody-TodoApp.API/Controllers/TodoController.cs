@@ -38,7 +38,35 @@ namespace Melody_TodoApp.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTodoAsync(Todo todo)
         {
-              _todoContext.Todos.Add(todo);
+            _todoContext.Todos.Add(todo);
+            await _todoContext.SaveChangesAsync();
+            return Ok(await _todoContext.Todos.ToListAsync());
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateTodoAsync(Todo updatedTodo)
+        {
+           var dbTodo = await _todoContext.Todos.FindAsync(updatedTodo.Id);
+            if(dbTodo is null)
+            {
+                return NotFound("Todo not found");
+            }
+            dbTodo.Name = updatedTodo.Name;
+            dbTodo.Description = updatedTodo.Description;
+            dbTodo.Duedate = updatedTodo.Duedate;
+            return Ok(await _todoContext.Todos.ToListAsync());
+
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteTodo(int id)
+        {
+           var deleteTodo = await _todoContext.Todos.FindAsync(id);
+            if(deleteTodo is null)
+            {
+                return NotFound("Todo not found");
+            }
+            _todoContext.Todos.Remove(deleteTodo);
             await _todoContext.SaveChangesAsync();
             return Ok(await _todoContext.Todos.ToListAsync());
         }
