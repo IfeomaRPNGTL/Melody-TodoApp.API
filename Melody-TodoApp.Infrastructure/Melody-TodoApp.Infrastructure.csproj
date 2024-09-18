@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Melody-TodoApp.Application\Melody-TodoApp.Application.csproj" />
     <ProjectReference Include="..\Melody.TodoApp.Domain\Melody.TodoApp.Domain.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,6 @@
+using Melody_TodoApp.Application.Interfaces;
 using Melody_TodoApp.Infrastructure.Data;
+using Melody_TodoApp.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<TodoDbContext>(Options => 
 Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<ITodoService, TodoService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
